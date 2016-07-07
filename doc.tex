@@ -30,7 +30,8 @@
 	\section{Environment preparation}
 	
 	\subsection{External programs}
-	In order to run, both Gaussian 09 and MOPAC are necessary. Gaussian is used 
+	In order to run, both Gaussian 09\cite{g09} and MOPAC\cite{mopac} are 
+	necessary. Gaussian is used 
 	for the initial charge calculations, and both versions A.02 and D.01 have 
 	been tested.
 	MOPAC2016 is used for the PM6 energy calculations. Version 16.175L is known 
@@ -114,7 +115,10 @@ gfortran -o BoxScale BoxScale.f08
 		\item par\_solute.txt: this file contain the parameters, necessary for 
 		the Molecular Mechanics calculations.\cite{Robertson2015}
 		\item param.txt: Same as above, but optimized for DMSO.\cite{Liu1995}
+		\item solute.txt: The file containing the molecule of interest.
 	\end{itemize}
+	
+	
 	
 	\newpage
 	\begin{spacing}{0.75}
