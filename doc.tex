@@ -156,6 +156,15 @@ gfortran -o BoxScale BoxScale.f08
 		\item Minimisation with MM
 		\item Minimisation with QM
 	\end{enumerate}
+	
+	In the past, 5 million MM iterations have been used.
+	Analysis shows that the energy is already converged after $10^4$ steps.
+	It is however recommended to use at least 1 million steps to ensure 
+	convergence.
+	
+	For the QM minimisation, 25.000 steps have been used. This mimimisation is 
+	necessary, because of the inaccuracies of the MM method. It is advised to 
+	actually perform the full 25.000 steps to ensure good results.
 
 	\newpage
 	\begin{spacing}{0.75}
