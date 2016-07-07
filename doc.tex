@@ -50,10 +50,10 @@
 	\verb|mopac|-directory to said variable in \verb|.bashrc|.
 	
 	\begin{lstlisting}[caption={Configuration},label=lst:configuration]
-	# in the installation directory:
-	ln -s MOPAC2016.exe mopac
-	# in .bashrc:
-	export PATH=$PATH:/path/to/mopac/
+# in the installation directory:
+ln -s MOPAC2016.exe mopac
+# in .bashrc:
+export PATH=$PATH:/path/to/mopac/
 	\end{lstlisting}
 	
 	\subsection{Compilation of internal programs}
@@ -75,9 +75,9 @@
 	compiler use \verb|tmp-GNU|.
 	Finally, compile the program:
 	\begin{lstlisting}
-	make GNU
-	# or
-	make intel
+make GNU
+# or
+make intel
 	\end{lstlisting}
 	
 	Note that it will default to \verb|intel| if no argument is given.
@@ -92,7 +92,7 @@
 	\subsubsection{BoxScale}
 	In the \verb|BoxScale| folder, execute the following:
 	\begin{lstlisting}
-	 gfortran -o BoxScale BoxScale.f08
+gfortran -o BoxScale BoxScale.f08
 	\end{lstlisting}
 	
 	
