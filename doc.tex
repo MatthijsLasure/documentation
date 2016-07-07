@@ -120,21 +120,40 @@ gfortran -o BoxScale BoxScale.f08
 		\item param.txt: Same as above, but optimized for DMSO.\cite{Liu1995}
 		\item solute.txt: The file containing the molecule of interest.
 		\item config.ini: Configuration file
-		\item run.sh: Script for runnning the simulation. Contains both the 
+		\item run.sh: Script for running the simulation. Contains both the 
 		minimization and simulation commands.
 	\end{itemize}
 	
 	The example files are ready for use with smaller molecules.
-	Bigger molecules may work, or may require redefining the box.
+	Bigger molecules may work, or may require redefining or resizing the box.
 	
 	\section{Density}
-	The density of DMSO is \SI{1.09037}{g cm^{-3}}.\cite{Radhamma2008}
-	Also, the molar volume of DMSO is \SI{79}{cm^3 mol^{-1}}.
-	The correlation between density and molar volume is:
+	The density of DMSO is \SI{1,09037}{g cm^{-3}}.\cite{Radhamma2008}
+	The correlation between density and molar mass is:
 	\begin{equation}
 	\rho = \dfrac{n}{(r \si{\angstrom})^3} = \dfrac{n}{(r \si{10^{-7} 
 	cm})^3} = \dfrac{n M_{DMSO}}{r^3 N_A} \dfrac{10^{21} g}{cm^3}
 	\end{equation}
+	
+	The initial box is too large to get the correct density, which will cause 
+	surface interactions. This is done on purpose as to avoid any molecules 
+	clipping into each other. To get to the correct density, we will use a 
+	quick minimisation (MM) and the BoxScale utility to resize the box while 
+	avoiding any collisions.
+	Following steps will be taken to achieve a box with length 
+	\SI{15,57}{\angstrom} and correct density. In this example the solute is 
+	regarded as a solvent molecule since they have nearly the same volume.
+	
+	\begin{enumerate}
+		\item Minimisation with MM
+		\item BoxScale x 0,9
+		\item Minimisation with MM
+		\item BoxScale x 0,9
+		\item Minimisation with MM
+		\item BoxScale x 0,96
+		\item Minimisation with MM
+		\item Minimisation with QM
+	\end{enumerate}
 
 	\newpage
 	\begin{spacing}{0.75}
