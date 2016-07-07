@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_GB
 \documentclass[a4paper,fleqn]{report}
 
-\usepackage{thesisStyle}
+\usepackage{docStyle}
 
 
 \lstset{language=Bash} 
@@ -127,6 +127,19 @@ gfortran -o BoxScale BoxScale.f08
 	The example files are ready for use with smaller molecules.
 	Bigger molecules may work, or may require redefining or resizing the box.
 	
+	\section{Solute preparation}
+	Preparing the solute consists of a few steps.
+	First, draw the solute in a program of choice to obtain the coordinates.
+	Make sure that the right enantiomer is drawn. With these coordinates, 
+	perform a minimisation of the solute.
+	Good results were had by first using the MM2 method, build into Chem3D, 
+	followed by a standard B3LYP/6-31G(d,p) optimisation in Gaussian 09.
+	
+	Put the resulting coordinates in a new file. At the top, add the number of 
+	atoms, and a description on the second line.
+	At the bottom of the file, add the number of bonds, eligible for rotation 
+	and a list of said bonds.
+	
 	\section{Density}
 	The density of DMSO is \SI{1,09037}{g cm^{-3}}.\cite{Radhamma2008}
 	The correlation between density and molar mass is:
@@ -158,11 +171,12 @@ gfortran -o BoxScale BoxScale.f08
 	\end{enumerate}
 	
 	In the past, 5 million MM iterations have been used.
-	Analysis shows that the energy is already converged after $10^4$ steps.
+	Analysis shows that the energy is already converged after $10^4 - 10^5$ 
+	steps.
 	It is however recommended to use at least 1 million steps to ensure 
 	convergence.
 	
-	For the QM minimisation, 25.000 steps have been used. This mimimisation is 
+	For the QM minimisation, 25.000 steps have been used. This minimisation is 
 	necessary, because of the inaccuracies of the MM method. It is advised to 
 	actually perform the full 25.000 steps to ensure good results.
 
