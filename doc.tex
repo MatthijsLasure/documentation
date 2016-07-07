@@ -179,6 +179,22 @@ gfortran -o BoxScale BoxScale.f08
 	For the QM minimisation, 25.000 steps have been used. This minimisation is 
 	necessary, because of the inaccuracies of the MM method. It is advised to 
 	actually perform the full 25.000 steps to ensure good results.
+	
+	The minimisation is included in the \verb|run.sh| script in the example 
+	folder. It uses the \verb|config0.ini| file, which inhibits solute rotation.
+	
+	\section{Simulation}
+	The simulation runs as following:
+	\begin{enumerate}
+		\item Program starts
+		\item Solute is rotated
+		\item n steps of QM are done
+		\item Solute is accepted / rejected
+		\item Program finishes
+		\item Script starts next iteration
+	\end{enumerate}
+	
+	
 
 	\newpage
 	\begin{spacing}{0.75}
