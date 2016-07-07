@@ -190,7 +190,7 @@ gfortran -o BoxScale BoxScale.f08
 		\setlength{\parsep}{-1pt}
 		\item Program starts
 		\item Solute is rotated
-		\item n steps of QM are done
+		\item $n$ steps of QM are done
 		\item Solute is accepted / rejected
 		\item Program finishes
 		\item Script starts next iteration
@@ -198,6 +198,11 @@ gfortran -o BoxScale BoxScale.f08
 	
 	For 2-(R)-chloropropanoic acid and 2-(R)-bromopropanoic acid, the maximal 
 	rotation was set to 60\textdegree.
+	This is however an issue for larger molecules (mandelic acid), where 
+	rotations can have a large impact. This will be adressed in v3.
+	
+	The example script will do 50.000 iterations of 500 steps each, after the 
+	minimisation.
 	
 
 	\newpage
