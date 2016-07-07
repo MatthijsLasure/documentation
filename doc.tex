@@ -1,6 +1,10 @@
+% !TeX spellcheck = en_GB
 \documentclass[a4paper,fleqn]{report}
 
 \usepackage{thesisStyle}
+
+
+\lstset{language=Bash} 
 
 \begin{document}
 	
@@ -24,15 +28,26 @@
 	\end{enumerate}
 	
 	\section{Environment preparation}
-	In order to run, both Gaussian 09 and MOPAC are necessary. Gaussian is used for the initial charge calculations, and both versions A.02 and D.01 have been tested.
-	MOPAC2016 is used for the PM6 energy calculations. Version 16.175L is known to work.
 	
-	For the installation of Gaussian, please refer to the manual. As long as the path is added to the \verb|PATH|-variable it should work.
+	\subsection{External programs}
+	In order to run, both Gaussian 09 and MOPAC are necessary. Gaussian is used 
+	for the initial charge calculations, and both versions A.02 and D.01 have 
+	been tested.
+	MOPAC2016 is used for the PM6 energy calculations. Version 16.175L is known 
+	to work.
 	
-	The installation of MOPAC is slightly more complex, as the instructions do not work out of the box.
-	First, follow the instructions included in the download. Make sure to install the password.
-	Next, add a symbolic link to the \verb|MOPAC2016.exe| executable named \verb|mopac|.
-	This symbolic link needs to be in a directory which is on the \verb|PATH|-variable. This can be achieved by adding the \verb|mopac|-directory to said variable in \verb|.bashrc|.
+	For the installation of Gaussian, please refer to the manual. As long as 
+	the path is added to the \verb|PATH|-variable it should work.
+	
+	The installation of MOPAC is slightly more complex, as the instructions do 
+	not work out of the box.
+	First, follow the instructions included in the download. Make sure to 
+	install the password.
+	Next, add a symbolic link to the \verb|MOPAC2016.exe| executable named 
+	\verb|mopac|.
+	This symbolic link needs to be in a directory which is on the 
+	\verb|PATH|-variable. This can be achieved by adding the 
+	\verb|mopac|-directory to said variable in \verb|.bashrc|.
 	
 	\begin{lstlisting}
 	# in the installation directory:
@@ -41,6 +56,25 @@
 	export PATH=$PATH:/path/to/mopac/
 	\end{lstlisting}
 	
+	\subsection{Compilation}
+	It is recommended to compile the programs locally on the system you plan to 
+	use. Binaries are available online, but might not work.
+	
+	Both the GNU Fortran compiler and the Intel iFort compiler are supported.
+	
+	First, obtain the latest sourcecode from 
+	\url{https://github.com/MatthijsLasure/MonteCarlo/releases}.
+	Unpack the files to a folder of choice.
+	Inside the MonteCarlo folder, make a folder that will contain the temporary 
+	files for the compilation.
+	For the Intel compiler, name the folder \verb|tmp-intel|, and for the GNU 
+	compiler use \verb|tmp-GNU|.
+	Finally, compile the program:
+	\begin{lstlisting}
+	make GNU
+	# or
+	make intel
+	\end{lstlisting}
 	
 	
 \end{document}
