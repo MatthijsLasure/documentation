@@ -32,8 +32,13 @@
 	The installation of MOPAC is slightly more complex, as the instructions do not work out of the box.
 	First, follow the instructions included in the download. Make sure to install the password.
 	Next, add a symbolic link to the \verb|MOPAC2016.exe| executable named \verb|mopac|.
+	This symbolic link needs to be in a directory which is on the \verb|PATH|-variable. This can be achieved by adding the mopac-directory to said variable in \verb|.bashrc|.
+	
 	\begin{lstlisting}
+	# in the installation directory:
 	ln -s MOPAC2016.exe mopac
+	# in .bashrc:
+	export PATH=$PATH:/path/to/mopac/
 	\end{lstlisting}
 	
 	
