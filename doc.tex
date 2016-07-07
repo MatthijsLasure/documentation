@@ -74,7 +74,7 @@ export PATH=$PATH:/path/to/mopac/
 	For the Intel compiler, name the folder \verb|tmp-intel|, and for the GNU 
 	compiler use \verb|tmp-GNU|.
 	Finally, compile the program:
-	\begin{lstlisting}
+	\begin{lstlisting}[caption={Compilation of MonteCarlo},label=lst:makeGNU]
 make GNU
 # or
 make intel
@@ -91,7 +91,8 @@ make intel
 	
 	\subsubsection{BoxScale}
 	In the \verb|BoxScale| folder, execute the following:
-	\begin{lstlisting}
+	\begin{lstlisting}[caption={Compilation of BoxScale}, 
+	label=lst:makeBoxScale]
 gfortran -o BoxScale BoxScale.f08
 	\end{lstlisting}
 	
