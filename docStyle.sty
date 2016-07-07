@@ -1,0 +1,127 @@
+\ProvidesPackage{docStyle}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage[dutch]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\usepackage[document]{ragged2e}
+\usepackage[explicit,compact]{titlesec}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{tabulary}
+%\usepackage[version=3]{mhchem} %Chemie!
+\usepackage{graphicx}
+%\graphicspath{ {images/} }
+%\usepackage{txfonts}
+%\usepackage{mathptmx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{calc}
+
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{multicol}
+
+
+% Man added
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{lscape}
+\usepackage[section]{placeins}
+
+%onderstaande laden om proberen de refs te fixen
+%\usepackage{array}
+%\usepackage{booktabs}
+%\usepackage{hypdoc}
+%\usepackage{listings}
+%\usepackage{lmodern}
+%\usepackage{mathpazo}
+%\usepackage{microtype}
+%vervolg
+%\usepackage{cleveref}
+%\usepackage{float}
+%\usepackage{xkeyval}
+
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\newcommand\textlcsc[1]{\textsc{\MakeLowercase{#1}}}
+
+\def\@makechapterhead#1{%
+  %\vspace*{10\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        %\Huge\bfseries \@chapapp\space \thechapter:\space\space\space
+        \Huge\bfseries \thechapter\space\space\space%
+        %\par\nobreak
+        %\vskip 20\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 30\p@
+  }}
+
+\usepackage[articletitle=true]{achemso}
+\setkeys{acs}{etalmode=truncate,maxauthors=0}
+
+
+%\renewcommand{\figurename}{Figuur } %Nederlandse titels voor de figuren
+\newcommand{\low}[1]{$_{\textrm{#1}}$}
+\newcommand{\high}[1]{$^{\textrm{#1}}$}
+\newcommand{\ten}[1]{$10^{\textrm{#1}}$}
+\newcommand{\tenn}[1]{\cdot 10^{#1}}
+
+%header + footer: hoofdstukken
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancypagestyle{MyStyle}{%
+    \fancyhead{} %Clean headers
+    \fancyhead[R]{\leftmark}
+    \fancyhead[L]{}
+    \renewcommand{\chaptermark}[1]{\markboth{\thechapter\space\space\space {\MakeUppercase{##1}}}{}}
+		%\scshape
+    \fancyfoot{}
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{Matthijs Lasure}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% Redefine the plain page style
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+    \fancyfoot{}
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{Matthijs Lasure}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+  \renewcommand{\headrulewidth}{0pt}% Line at the header invisible
+  \renewcommand{\footrulewidth}{0.4pt}% Line at the footer visible
+}
+
+\setlength{\headheight}{15pt}
+
+\newlength{\mwidth}
+\setlength{\mwidth}{\linewidth+6.0pt}
+
+\lstset{language=Fortran} 
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\mwidth}{#1#2#3}}}
+%\DeclareCaptionFormat{listing}{\rule{\dimexpr\textwidth+17pt\relax}{0.4pt}\vskip1pt#1#2#3}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\DeclareCaptionFormat{listing}{\rule{\dimexpr\textwidth\relax}{0.4pt}\par\vskip1pt\hskip1em #1#2#3\rule{\dimexpr\textwidth\relax}{0.4pt}}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt}%, font={sf},labelsep=space,labelfont=bf}
+
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
