@@ -56,15 +56,19 @@
 	export PATH=$PATH:/path/to/mopac/
 	\end{lstlisting}
 	
-	\subsection{Compilation}
+	\subsection{Compilation of internal programs}
+	
+	\subsubsection{Compilers}
 	It is recommended to compile the programs locally on the system you plan to 
-	use. Binaries are available online, but might not work.
+	use. Binaries are available on-line, but might not work.
 	
 	Both the GNU Fortran compiler and the Intel iFort compiler are supported.
 	
-	First, obtain the latest sourcecode from 
-	\url{https://github.com/MatthijsLasure/MonteCarlo/releases}.
-	Unpack the files to a folder of choice.
+	First, obtain the latest source code from 
+	\url{https://github.com/MatthijsLasure/MonteCarlo/releases} and unpack the 
+	file.
+	
+	\subsubsection{Monte Carlo}
 	Inside the MonteCarlo folder, make a folder that will contain the temporary 
 	files for the compilation.
 	For the Intel compiler, name the folder \verb|tmp-intel|, and for the GNU 
@@ -74,6 +78,21 @@
 	make GNU
 	# or
 	make intel
+	\end{lstlisting}
+	
+	Note that it will default to \verb|intel| if no argument is given.
+	
+	The output file is called \verb|MonteCarloGNU| or \verb|MonteCarloOpenMP| 
+	depending on the chosen compiler, and will have the correct permissions.
+	
+	\subsubsection{ConvertDump}
+	In the \verb|ConvertDump| folder, just execute \verb|make|. It's that 
+	simple!
+	
+	\subsubsection{BoxScale}
+	In the \verb|BoxScale| folder, execute the following:
+	\begin{lstlisting}
+	 gfortran -o BoxScale BoxScale.f08
 	\end{lstlisting}
 	
 	
