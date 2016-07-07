@@ -97,4 +97,24 @@ gfortran -o BoxScale BoxScale.f08
 	\end{lstlisting}
 	
 	
+	\section{Preparation of the simulation}
+	It is advised to make a dedicated folder per simulation ran, as to avoid 
+	clutter and overwriting the wrong files.
+	A number of start files are necessary as listed below.
+	In the tools/files folder there are example files provided that can be 
+	used.
+	
+	\begin{itemize}
+		\item box.txt: This file contains the coordinates and angles of the 
+		DMSO molecules. The example file contains a box, size 20 \angstrom and 
+		30 DMSO molecules. This box has been proven usefull when calculating 
+		small (10-20 atoms) molecules.
+		\item DMSO.txt: In this file is the DMSO molecule defined. It is 
+		already optimized and is ready to be used.
+		\item par\_solute.txt: this file contain the parameters, necessary for 
+		the Molecular Mechanics calculations.\ref{Robertson2015}
+		\item param.txt: Same as above, but optimized for DMSO.\ref{Liu1995}
+	\end{itemize}
+	
+	
 \end{document}
