@@ -110,8 +110,8 @@ gfortran -o BoxScale BoxScale.f08
 		\setlength{\parsep}{-1pt}
 		\item box.txt: This file contains the coordinates and angles of the 
 		DMSO molecules. The example file contains a box, size 
-		\SI{20}{\angstrom} and 
-		30 DMSO molecules. This box has been proven usefull when calculating 
+		\SI{20}{\angstrom} and 30 DMSO molecules.
+		This box has been proven usefull when calculating 
 		small (10-20 atoms) molecules.
 		\item DMSO.txt: In this file is the DMSO molecule defined. It is 
 		already optimized and is ready to be used.
@@ -127,7 +127,14 @@ gfortran -o BoxScale BoxScale.f08
 	The example files are ready for use with smaller molecules.
 	Bigger molecules may work, or may require redefining the box.
 	
-
+	\section{Density}
+	The density of DMSO is \SI{1.09037}{g cm^{-3}}.\cite{Radhamma2008}
+	Also, the molar volume of DMSO is \SI{79}{cm^3 mol^{-1}}.
+	The correlation between density and molar volume is:
+	\begin{equation}
+	\rho = \dfrac{n}{(\Sigma{r}{\angstrom})^3} = \dfrac{n}{(\Sigma{r}{10^{-7} 
+	cm})^3} = \dfrac{n M_{DMSO}}{r^3 N_A} \dfrac{10^{21} g}{cm^3}
+	\end{equation}
 
 	\newpage
 	\begin{spacing}{0.75}
