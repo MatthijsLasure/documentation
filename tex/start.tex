@@ -8,5 +8,15 @@ Open the last log file and ensure that the energy is negative. For
 chloropropanoic acid, typical values are around $-800 \textrm{kJ/mol}$.
 
 If the energy is positive some molecules are still clipped into each other. 
-This can be verified using the ConvertDump tool (see \ref{chap:convertdump}).
+This can be verified using the ConvertDump tool (see chapter 
+\ref{chap:convertdump}).
+In this case run another long LJ run (possibly use 5 million), again followed 
+by another long GA run.
 
+\section{Starting}
+If you already did the minimisation and choose for the all-in-one package, you 
+don't have to do anything.
+
+If you are starting without minimisation, make sure it's turned off in the 
+\verb|run.sh| script. Then start the script, as described above in 
+section~\ref{subs:minimisation}.

@@ -113,7 +113,7 @@ H -1.97 -1.13  1.18
 It cannot be stressed enough that there MUST be an empty line at the end of the 
 file to ensure correct reading of the data.
 
-\section{Minimisation}
+\section{Minimisation theory}
 In the run script, there is a section for the minimisation, between the 
 \verb|if false; then| en \verb|fi| statements. To run both the minimisation and 
 the simulation, change the \verb|false| to \verb|true|. If you only want to run 
@@ -144,6 +144,7 @@ In the config file, the parameters have been set to not rotate the solute (as
 this is not the actual simulation). As explained in section XX, the number of 
 steps for LJ and GA are ignored as they are passed via command line arguments.
 
+\subsection{Minimisation}\label{subs:minimisation}
 When you are ready to start, run following command:
 
 \begin{lstlisting}[caption=runmin]
