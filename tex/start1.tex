@@ -14,10 +14,14 @@ To use the simulation, following tools and programs are required:
 \end{itemize}
 
 \section{External tools}
+\subsection{Gaussian 09}
+During development, gaussian versions 09 A02 and 09D have been used, and are 
+proven to work correctly.
 To install Gaussian, follow the instructions. Make sure that the installation 
 path is added to the \verb|$PATH|-variable. If Gaussian can be started with the 
 command \verb|g09|, the installation was succesfull.
 
+\subsection{MOPAC 2016}
 MOPAC is a little tougher. After downloading, installing and activating, a 
 symlink must be made. Issue following command in the installation directory:
 
@@ -38,8 +42,29 @@ source .bashrc
 It works when you can succesfully execute \verb|mopac| on the command line.
 
 \section{Downloading and compiling}
+
+\subsection{Downloading}
 At \url{https://github.com/MatthijsLasure/MonteCarlo/releases/latest}, the 
 latest release version of the program can be obtained. These versions are 
 deemed to be working correctly.
-Alternatively, the hot last version can be obtained at 
-\url{https://github.com/MatthijsLasure/MonteCarlo/archive/master.zip}
+Alternatively, the very last revision can be obtained at 
+\url{https://github.com/MatthijsLasure/MonteCarlo/archive/master.zip}.
+Please notice that this revision is not a release, and may contain bugs that 
+are not noticed or in the process of being fixed. If git is installed on the 
+system, following command can also be issued to obtain a ready to go directory:
+
+\begin{lstlisting}[caption=Clone with git]
+git clone https://github.com/MatthijsLasure/MonteCarlo.git
+\end{lstlisting}
+
+This command will generate a MonteCarlo-directory, containing all source files.
+
+\subsection{Compiling}
+Compiling is very easy due to the makefiles. Inside the source-directory, make 
+a directory called either \verb|tmp-gnu| or \verb|tmp-intel|, and issue 
+following command:
+
+\begin{lstlisting}[caption=Compiling the main program]
+make GNU   # To use the GFortran compiler
+make intel # To use the Intel compiler
+\end{lstlisting}
