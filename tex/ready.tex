@@ -7,6 +7,11 @@ density.
 \section{Box preparation}
 For smaller molecules ($N < 25$), the included box can be used. It contains 30 
 DMSO molecules (random placed and rotated) in a \SI{20}{\angstrom} sided box.
+To generate a new box, it generally suffices to generate 6 random values per 
+DMSO molecule, where the first 3 represent the position of the Centre of Mass 
+(CoM), and the latter are the angles of rotation. The coordinates are relative 
+to the middle of the box, so they will be in $[-r/2, +r/2]$. The angles lie in 
+$[-\pi, +\pi]$.
 
 \section{Solute preparation}
 This section can be performed with a program of choice that can handle 
@@ -14,7 +19,7 @@ molecules, such as ADF, Gaussian or Chem3D. Draw the molecule and quickly
 minimize (if available). Afterwards, perform a good optimisation to get a good 
 structure. Good results have been achieved using Gaussian and the B3LYP/6-31G* 
 potential-base set combination.
-When finished, obtain the carthesian coordinates from the output. Perform a PM6 
+When finished, obtain the cartesian coordinates from the output. Perform a PM6 
 single point calculation, and obtain the energy in Hartree.
 
  Open the box file, and look for the line that says \verb|SOLUTE|. After this 
@@ -24,7 +29,7 @@ single point calculation, and obtain the energy in Hartree.
 	\item The number of solute atoms;
 	\item A description of the solute (e.g. name);
 	\item All atom symbols and coordinates, one line per atom;
-	\item The energy in hartree;
+	\item The energy in Hartree;
 	\item The number of bonds used for internal rotation;
 	\item A list of bonds used for rotation (see below);
 	\item An empty line.
