@@ -1,1 +1,35 @@
 % Getting into it: keeping taps on the simulation
+
+There are a few tools available to keep an eye on your simulation, something 
+that is strongly recommended to do.
+
+
+\section{HTOP}
+Most Linux distributions come with \verb|htop| preinstalled. After startup, you 
+can filter on username by pressing 'u', and apply a filter by pressing 'F4'. 
+
+When starting a LJ simulation, 8 cores will be used by Gaussian for the 
+calculation of the partial charges. Afterwards, the program will run on one 
+core, which should reach 100\%. Due to the OpenMP design there will be multiple 
+threads visible (as set in the run script), but only one will actually do 
+something.
+
+In the case of a QM simulation, multiple cores will be used. Currently 
+(27/07/2016) 2 cores will be maxed out while the other 6 hover around 5\%. This 
+is normal behaviour.
+
+If the program is running (= is present in the list of open programs) but there 
+is no CPU activity it may have locked itself. Consult the logfile and the 
+troubleshooting section of this manual.
+
+On 8-core systems, a system load of 4 to 5 is observed.
+
+\section{check.sh}
+The \verb|check.sh| script is a simple wrapper for the 'tail' command: it will 
+find the latest output file and display the latest line. After sleeping 1 
+second it erases the line and starts over.
+
+Start it using following command. Terminate with CTRL-C.
+\begin{lstlisting}[caption=The check utility]
+./check.sh log.txt
+\end{lstlisting}
