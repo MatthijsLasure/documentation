@@ -28,9 +28,18 @@ ln -s MOPAC2016.exe mopac
 Finally, make sure that the MOPAC directory is also included in the 
 \verb|$PATH|-variable. The easiest way to achieve this, is by adding following 
 to your \verb|.bashrc|-file:
-\begin{lstlisting}[caption=\null]
+\begin{lstlisting}[caption=changing the path variable]
 export PATH=$PATH:/path/to/mopac
 
 # Then, in the shell execute: (or restart the terminal)
 source .bashrc
 \end{lstlisting}
+
+It works when you can succesfully execute \verb|mopac| on the command line.
+
+\section{Downloading and compiling}
+At \url{https://github.com/MatthijsLasure/MonteCarlo/releases/latest}, the 
+latest release version of the program can be obtained. These versions are 
+deemed to be working correctly.
+Alternatively, the hot last version can be obtained at 
+\url{https://github.com/MatthijsLasure/MonteCarlo/archive/master.zip}
