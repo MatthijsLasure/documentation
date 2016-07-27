@@ -125,7 +125,11 @@ each. In between simulations the box is rescaled.
 
 The density of the box can be calculated using formula~\ref{eqn:density}. If 
 assumed that the solute is of equal volume as a DMSO molecule (which is the 
-case for e.g. chloropropanoic acid), n is 31.
+case for e.g. chloropropanoic acid), n is 31 and the density is $0,5027 
+\textrm{ g cm}^{-3}$. After a rescaling the correct edge length is obtained to 
+get the density of $1,09037 \textrm{ g cm}^{-3}$.\cite{Radhamma2008}
+The process is done in multiple steps to allow the system to relax so no 
+molecules are clipping into each other.
 
 \begin{equation} \label{eqn:density}
 \rho = \dfrac{n}{(r \si{\angstrom})^3} = \dfrac{n}{(r \si{\cdot 10^{-7} cm})^3} 
