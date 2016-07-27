@@ -1,1 +1,32 @@
 % Getting ready: preparations
+Before the actual simulation can start, some preparations have to be performed.
+This consists of preparing the solute, the box and performing a minimization 
+using Lennard-Jones. Finally, the box is rescaled to reflect the correct 
+density.
+
+\section{Solute preparation}
+This section can be performed with a program of choice that can handle 
+molecules, such as ADF, Gaussian or Chem3D. Draw the molecule and quickly 
+minimize (if available). Afterwards, perform a good optimisation to get a good 
+structure. Good results have been achieved using Gaussian and the B3LYP/6-31G* 
+potential-base set combination.
+When finished, obtain the carthesian coordinates from the output. Perform a PM6 
+single point calculation, and obtain the energy in Hartree.
+
+ Open the box file, and look for the line that says \verb|SOLUTE|. After this 
+ line, write the following:
+
+\begin{enumerate}
+	\item The number of solute atoms;
+	\item A description of the solute (e.g. name);
+	\item All atom symbols and coordinates, one line per atom;
+	\item The energy in hartree;
+	\item The number of bonds used for internal rotation;
+	\item A list of bonds used for rotation (see below);
+	\item An empty line.
+\end{enumerate}
+
+\subsection{Bonds for rotation}
+The syntax for this list is unfortunatly very picky due to programming 
+limitations. 
+\verb|III_III_FFFFFF|
