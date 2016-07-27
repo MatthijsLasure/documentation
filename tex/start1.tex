@@ -7,7 +7,7 @@ To use the simulation, following tools and programs are required:
 	\item MOPAC 2016: for the PM6 calculations in the QM section.
 	\item A Fortran compiler: to compile the code. Works very good with 
 	gfortran, altough the Intel compiler should work.
-	\item MatLab: not required, but usefull for analysis of the simulation and 
+	\item MatLab: not required, but useful for analysis of the simulation and 
 	viewing the spectra.
 	\item Linux: The program should work with any Linux distribution. Windows 
 	or Mac OS is not supported.
@@ -15,7 +15,7 @@ To use the simulation, following tools and programs are required:
 
 \section{External tools}
 \subsection{Gaussian 09}
-During development, gaussian versions 09 A02 and 09D have been used, and are 
+During development, Gaussian versions 09 A02 and 09D have been used, and are 
 proven to work correctly.
 To install Gaussian, follow the instructions. Make sure that the installation 
 path is added to the \verb|$PATH|-variable. If Gaussian can be started with the 
@@ -23,7 +23,8 @@ command \verb|g09|, the installation was succesfull.
 
 \subsection{MOPAC 2016}
 MOPAC is a little tougher. After downloading, installing and activating, a 
-symlink must be made. Issue following command in the installation directory:
+symbolic link must be made. Issue following command in the installation 
+directory:
 
 \begin{lstlisting}[caption=Symlink to MOPAC]
 ln -s MOPAC2016.exe mopac
@@ -39,7 +40,7 @@ export PATH=$PATH:/path/to/mopac
 source .bashrc
 \end{lstlisting}
 
-It works when you can succesfully execute \verb|mopac| on the command line.
+It works when you can successfully execute \verb|mopac| on the command line.
 
 \section{Downloading and compiling}
 
@@ -60,11 +61,34 @@ git clone https://github.com/MatthijsLasure/MonteCarlo.git
 This command will generate a MonteCarlo-directory, containing all source files.
 
 \subsection{Compiling}
-Compiling is very easy due to the makefiles. Inside the source-directory, make 
-a directory called either \verb|tmp-gnu| or \verb|tmp-intel|, and issue 
-following command:
+Compiling is very easy due to the makefiles.
+Inside the MonteCarlo source directory, make a directory called either 
+\verb|tmp-gnu| or \verb|tmp-intel|, and issue following command:
 
 \begin{lstlisting}[caption=Compiling the main program]
 make GNU   # To use the GFortran compiler
 make intel # To use the Intel compiler
 \end{lstlisting}
+
+The executable \verb|MonteCarloGNU| or \verb|MonteCarloOpenMP| will be created.
+Both have the OpenMP standard enabled to allow for multi-threaded 
+PM6-calculations.
+
+All the utilities can be compiled, just by issuing the \verb|make| command in 
+their respective source directories. GFortran is always used.
+
+\section{Set-up}
+It is strongly advised to make a directory for every simulation, as to keep 
+files separated. Copy all necessary files into this directory, and make sure 
+that the executable files (\verb|run.sh| and \verb|MonteCarloGNU|) have the 
+correct permissions (executable). Following files are nessesary:
+
+\begin{tabular}{l}
+	General \\ \hline
+	MonteCarloGNU / MonteCarloOpenMP \\
+	run.sh \\
+	box.txt \\
+	Lennard-Jones \\ \hline
+	param.txt \\
+	par\_sol.txt \\
+\end{tabular}
