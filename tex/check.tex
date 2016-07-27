@@ -36,14 +36,14 @@ Start it using the command below. Terminate using CTRL-C.
 
 \section{MatLab}
 The scripts \verb|readIO.m| and \verb|importfileFast.m| are designed to read in 
-the data from the outputfiles, and generate the appropriate graphs.
+the data from the output files, and generate the appropriate graphs.
 
 Copy the scripts to the main directory of the simulation. Open \verb|readIO.m| 
 in the editor, and change the loop length to the amount of steps. Save and run 
 the script.
 
 The script will plot the accepted energy versus the step in figure 2. Following 
-variables are available to plot as wel:
+variables are available:
 
 \begin{tabular}{ll}
 	Variable & Description \\ \hline
@@ -57,3 +57,14 @@ variables are available to plot as wel:
 	TotEng & Total energy of the current step; \\
 	TotEng\_old & Total energy of the last accepted step. \\
 \end{tabular}
+
+\section{ConvertDump}
+The convertdump utility can convert the box- and dump-files into XYZ-files that 
+can be read using Jmol.
+
+To convert a box to a XYZ file without displaying hydrogen atoms (to save space 
+and time), use the command below.
+
+\begin{lstlisting}[caption=Convert a box to a XYZ file]
+./convertDump -m 1 -b box.5.out -o box.5.xyz
+\end{lstlisting}
