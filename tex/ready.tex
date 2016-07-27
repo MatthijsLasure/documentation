@@ -4,14 +4,21 @@ This consists of preparing the solute, the box and performing a minimization
 using Lennard-Jones. Finally, the box is rescaled to reflect the correct 
 density.
 
-\section{IMPORTANT NOTE ABOUT FLOATING POINT NUMBERS}
+\section{IMPORTANT NOTES}
+\subsection{Floating Point Values}
 If the program expects a floating point value but an integer is given (because 
 the value happens to be round), it will be incorrectly read. Always make sure 
 there is a point.
 
 So not: \verb|  8   1 60| (for solute rotation)
 
-But do: \verb|  8   1 60.|
+But do: \verb|  8   1 60.0|
+
+\subsection{End Of File}
+Fortran expects an empty line at the end of the file. Not complying will result 
+in an incorrect read. This is very important when preparing data on a Windows 
+machine. It is also advised to use the \verb|dos2unix| and \verb|checknprep| 
+(included in the download) utilities to ensure correct conventions.
 
 \section{Box preparation}
 For smaller molecules ($N < 25$), the included box can be used. It contains 30 
@@ -65,7 +72,8 @@ limitations.
 \verb|III_III_FFFFFF|
 
 With III being the number for the atoms of the bond. Notice that one integer 
-MUST occupy 3 characters. The underscore is a character that will be ignored, 
+MUST occupy 3 characters. The underscore is a character that will be ignored 
+(it is recommended to use a space), 
 and FFFFF is a floating point value, that is used to indicate an individual 
 maximal rotation, overriding the general maximal rotation. This is optional.
 
@@ -103,5 +111,6 @@ H -1.97 -1.13  1.18
 \end{lstlisting}
 
 It cannot be stressed enough that there MUST be an empty line at the end of the 
-file to ensure correct reading of the data. This is a particular problem with 
-Windows - Linux file transfers.
+file to ensure correct reading of the data.
+
+\section{Minimisation}
