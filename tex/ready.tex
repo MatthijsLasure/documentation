@@ -11,7 +11,21 @@ To generate a new box, it generally suffices to generate 6 random values per
 DMSO molecule, where the first 3 represent the position of the Centre of Mass 
 (CoM), and the latter are the angles of rotation. The coordinates are relative 
 to the middle of the box, so they will be in $[-r/2, +r/2]$. The angles lie in 
-$[-\pi, +\pi]$.
+$[-\pi, +\pi]$. Use following syntax:
+
+\begin{enumerate}
+	\item The half length of the edge of the box, in angstrom ($r/2$);
+	\item Number of DMSO molecules;
+	\item The energy of the box (see note);
+	\item The coordinates and angles of all molecules, one per line; (X Y Z 
+	$\alpha$ $\beta$ $\gamma$)
+	\item A line that says 'SOLUTE';
+	\item The solute (see next section).
+\end{enumerate}
+
+Note: the energy of the box will be calculated during the simulation when QM 
+calculations are performed (see Getting Started). When starting with 
+minimisations it is sufficient to set it to $0.0$.
 
 \section{Solute preparation}
 This section can be performed with a program of choice that can handle 
