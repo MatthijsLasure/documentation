@@ -33,8 +33,8 @@ $[-\pi, +\pi]$. Use following syntax:
 	\item The half length of the edge of the box, in angstrom ($r/2$);
 	\item Number of DMSO molecules;
 	\item The energy of the box (see note);
-	\item The coordinates and angles of all molecules, one per line; (X Y Z 
-	$\alpha$ $\beta$ $\gamma$)
+	\item The coordinates and angles of all molecules, one per line (X Y Z 
+	$\alpha$ $\beta$ $\gamma$);
 	\item A line that says \verb|SOLUTE|;
 	\item The solute (see next section).
 \end{enumerate}
@@ -114,6 +114,21 @@ It cannot be stressed enough that there MUST be an empty line at the end of the
 file to ensure correct reading of the data.
 
 \section{Minimisation}
-In the run script, there is a part dedicated for the minimisation, between de 
+In the run script, there is a section for the minimisation, between the 
 \verb|if false; then| en \verb|fi| statements. To run both the minimisation and 
-the simulation, change the \verb|false| to \verb|true|
+the simulation, change the \verb|false| to \verb|true|. If you only want to run 
+the minimisation, copy the first section (until the \verb|fi|) to a seperate 
+run script.
+
+The run script will perform 4 Lennard-Jones simulations with 1 million steps 
+each. In between simulations the box is rescaled.
+
+The density of the box can be calculated using formula~\ref{eqn:density}. If 
+assumed that the solute is of equal volume as a DMSO molecule (which is the 
+case for e.g. chloropropanoic acid), n is 31.
+
+\begin{equation} \label{eqn:density}
+\rho = \dfrac{n}{(r \si{\angstrom})^3} = \dfrac{n}{(r \si{\cdot 10^{-7} cm})^3} 
+=
+\dfrac{n}{(r \cdot 10^{-7})^3} \cdot \dfrac{M_{DMSO}}{N_A} \dfrac{g}{cm^3}
+\end{equation}
