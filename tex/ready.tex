@@ -4,6 +4,15 @@ This consists of preparing the solute, the box and performing a minimization
 using Lennard-Jones. Finally, the box is rescaled to reflect the correct 
 density.
 
+\section{IMPORTANT NOTE ABOUT FLOATING POINT NUMBERS}
+If the program expects a floating point value but an integer is given (because 
+the value happens to be round), it will be incorrectly read. Always make sure 
+there is a point.
+
+So not: \verb|  8   1 60| (for solute rotation)
+
+But: \verb|  8   1 60.|
+
 \section{Box preparation}
 For smaller molecules ($N < 25$), the included box can be used. It contains 30 
 DMSO molecules (random placed and rotated) in a \SI{20}{\angstrom} sided box.
@@ -29,7 +38,7 @@ minimisations it is sufficient to set it to $0.0$.
 
 \section{Solute preparation}
 This section can be performed with a program of choice that can handle 
-molecules, such as ADF, Gaussian or Chem3D. Draw the molecule and quickly 
+molecules, such as ADF, Gaussian or Chem3D. Draw the molecule and use a quick 
 minimize (if available). Afterwards, perform a good optimisation to get a good 
 structure. Good results have been achieved using Gaussian and the B3LYP/6-31G* 
 potential-base set combination.
