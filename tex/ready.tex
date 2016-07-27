@@ -35,7 +35,7 @@ $[-\pi, +\pi]$. Use following syntax:
 	\item The energy of the box (see note);
 	\item The coordinates and angles of all molecules, one per line; (X Y Z 
 	$\alpha$ $\beta$ $\gamma$)
-	\item A line that says 'SOLUTE';
+	\item A line that says \verb|SOLUTE|;
 	\item The solute (see next section).
 \end{enumerate}
 
@@ -114,3 +114,6 @@ It cannot be stressed enough that there MUST be an empty line at the end of the
 file to ensure correct reading of the data.
 
 \section{Minimisation}
+In the run script, there is a part dedicated for the minimisation, between de 
+\verb|if false; then| en \verb|fi| statements. To run both the minimisation and 
+the simulation, change the \verb|false| to \verb|true|
