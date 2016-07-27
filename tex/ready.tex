@@ -27,6 +27,12 @@ single point calculation, and obtain the energy in Hartree.
 \end{enumerate}
 
 \subsection{Bonds for rotation}
-The syntax for this list is unfortunatly very picky due to programming 
+The syntax for this list is unfortunately very picky due to programming 
 limitations. 
+
 \verb|III_III_FFFFFF|
+
+With III being the number for the atoms of the bond. Notice that one integer 
+MUST occupy 3 characters. The underscore is a character that will be ignored, 
+and FFFFF is a floating point value, that is used to indicate an individual 
+maximal rotation, overriding the general maximal rotation. 
