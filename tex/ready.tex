@@ -136,3 +136,26 @@ molecules are clipping into each other.
 =
 \dfrac{n}{(r \cdot 10^{-7})^3} \cdot \dfrac{M_{DMSO}}{N_A} \dfrac{g}{cm^3}
 \end{equation}
+
+After the LJ simulations, a long QM simulation is run to ensure the box is well 
+optimized.
+
+In the config file, the parameters have been set to not rotate the solute (as 
+this is not the actual simulation). As explained in section XX, the number of 
+steps for LJ and GA are ignored as they are passed via command line arguments.
+
+When you are ready to start, run following command:
+
+\begin{lstlisting}[caption=runmin]
+./run.sh &> log.txt
+\end{lstlisting}
+
+By using \verb|&> log.txt|, all messages are written to log.txt.
+
+It is important to note where to run the command. The program will be 
+terminated when the shell is closed. This can occur in a SSH session due to 
+network issues or other problems. Thereby you can use for example \verb|byobu|, 
+which will create a shell that will remain open, even when the calling shell is 
+closed. Open an existing session with \verb|byobu|, or open a new one with 
+\verb|byobu new|. You can detach from a byobu shell by pressing CTRL-A and then 
+CTRL-D.
