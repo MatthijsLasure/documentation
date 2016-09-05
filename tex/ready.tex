@@ -10,18 +10,15 @@ If the program expects a floating point value but an integer is given (because
 the value happens to be round), it will be incorrectly read. Always make sure 
 there is a point.
 
-So not: \verb|  8   1 60| (for solute rotation)
-
-But do: \verb|  8   1 60.0|
-
+For example, see the solute rotation setting:\\
 Wrong: \vispace\vispace 8 \vispace\vispace\vispace 1 \vispace 60 \\
-\ Good: \vispace\vispace 8 \vispace\vispace\vispace 1 \vispace 60.0
+Good: \vispace\vispace 8 \vispace\vispace\vispace 1 \vispace 60.0
 
 \subsection{End Of File}
 Fortran expects an empty line at the end of the file. Not complying will result 
 in an incorrect read. This is very important when preparing data on a Windows 
 machine. It is also advised to use the \verb|dos2unix| and \verb|checknprep| 
-(included in the download) utilities to ensure correct conventions.
+(included in the source code) utilities to ensure correct conventions.
 
 \section{Box preparation}
 For smaller molecules ($N < 25$), the included box can be used. It contains 30 
@@ -68,9 +65,9 @@ single point calculation, and obtain the energy in Hartree.
 	\item An empty line.
 \end{enumerate}
 
-\subsection{Bonds for rotation}
-The syntax for this list is unfortunately very picky due to programming 
-limitations. 
+\subsection{Bonds for solute rotation}
+This list contains bonds that can be rotated around. The syntax is the 
+following:
 
 \verb|III_III_FFFFFF|
 
@@ -78,12 +75,13 @@ With III being the number for the atoms of the bond. Notice that one integer
 MUST occupy 3 characters. The underscore is a character that will be ignored 
 (it is recommended to use a space), 
 and FFFFF is a floating point value, that is used to indicate an individual 
-maximal rotation, overriding the general maximal rotation. This is optional.
+maximal rotation, overriding the general maximal rotation. This is optional, 
+but will be written by the program in the result file.
 
 In short, writing the following will result in unexpected results:
 
 \verb|8 1| will read in as $(81, 0)$ instead of $(8, 1)$. Rather use 
-\verb|008 001| that will yield correct results.
+\verb|008 001|.
 
 \begin{lstlisting}[caption=Example of a correct box-file]
 7.7838685667999998     
@@ -143,11 +141,48 @@ molecules are clipping into each other.
 After the LJ simulations, a long QM simulation is run to ensure the box is well 
 optimized.
 
-In the config file, the parameters have been set to not rotate the solute (as 
+In the config file (\verb|config0.ini|), the parameters have been set to not 
+rotate the solute (as 
 this is not the actual simulation). As explained in section XX, the number of 
 steps for LJ and GA are ignored as they are passed via command line arguments.
 
-\subsection{Minimisation}\label{subs:minimisation}
+The minimazation is done in several steps in the run script. If necessary, 
+change the scaling factor to obtain a bigger or smaller box.
+
+% Getting started: the simulation
+
+\section{Checking the output}
+When the minimization is done, open the last log file and ensure that the 
+energy is negative. For chloropropanoic acid, typical values are around $-800 
+\textrm {kJ/mol}$.
+
+If the energy is positive some molecules are still clipped into each other. 
+This can be verified by visualisation using the ConvertDump tool and Jmol (see 
+chapter 
+\ref{chap:convertdump}).
+In this case make another long LJ run (possibly use 5 million), again followed 
+by another long GA run.
+
+\section{Starting}
+If you already did the minimisation and choose for the all-in-one package, you 
+don't have to do anything.
+
+If you are starting without minimisation, make sure it's turned off in the 
+\verb|run.sh| script. Then start the script.
+
+\subsection{Where to run?}
+The program is likely to run very long. It is thereby very important to check 
+how to start the program: if you run it in a SSH session, it will be terminated 
+when the session closes due to network issues or a client crash.
+
+To work around this problem, one can use the 'byobu' package. This will open a 
+new shell that stays alive, even when the calling terminal is closed. 
+
+Open a new shell using \verb|byobu bash|. To detach the shell, press CTRL-A and 
+then CTRL-D. For reattaching the shell, just type \verb|byobu|.
+
+
+\subsection{Start}\label{subs:start}
 When you are ready to start, run following command:
 
 \begin{lstlisting}[caption=runmin]
@@ -156,10 +191,4 @@ When you are ready to start, run following command:
 
 By using \verb|&> log.txt|, all messages are written to log.txt.
 
-It is important to note where to run the command. The program will be 
-terminated when the shell is closed. This can occur in a SSH session due to 
-network issues or other problems. Thereby you can use for example \verb|byobu|, 
-which will create a shell that will remain open, even when the calling shell is 
-closed. Open an existing session with \verb|byobu|, or open a new one with 
-\verb|byobu new|. You can detach from a byobu shell by pressing CTRL-A and then 
-CTRL-D.
+Congratulations! The program should be running now!
