@@ -68,3 +68,14 @@ and time), use the command below.
 \begin{lstlisting}[caption=Convert a box to a XYZ file]
 ./convertDump -m 1 -b box.5.out -o box.5.xyz
 \end{lstlisting}
+
+For the full documentation, please see chapter \ref{chap:convertdump}.
+
+\section{Analysis of the conformers}
+Using the scripts \verb|post.sh| and \verb|cenergy.m| you can get an overview 
+of the different conformers. For this, the utility \verb|calcDihedral| and the 
+\verb|post.sh| script must be present in the main directory. Edit the 
+post-script and insert the atoms for the dihedral angle. Run it, with as 
+argument the logfile. This will result in a few files: acc.txt, energy.txt and 
+hoeken.txt. Put these in the same directory as the cenergy-script, and run it 
+in matlab.

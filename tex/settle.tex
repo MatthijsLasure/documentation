@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_GB
 % Getting settled: download, compile and set up
 To use the simulation, following tools and programs are required:
 \begin{itemize}
@@ -13,11 +14,19 @@ To use the simulation, following tools and programs are required:
 	or Mac OS is not supported.
 \end{itemize}
 
+To compile the source code, you need the \verb|make| utility and a compiler. 
+Following compilers have been successfully used. Other versions are likely to 
+work, but are untested. To enable parallelization, the compiler must support 
+OpenMP.
+\begin{itemize}
+	\item Intel Fortran Compiler version 16.0.3
+	\item GNU Fortran Compiler versions 4.6.3 and 4.8.5
+\end{itemize}
+
 \section{External tools}
 \subsection{Gaussian 09}
 During development, Gaussian 09\cite{g09} versions A02 and 09D have been used, 
-and are 
-proven to work correctly.
+and are proven to work correctly.
 To install Gaussian, follow the instructions. Make sure that the installation 
 path is added to the \verb|$PATH|-variable. If Gaussian can be started with the 
 command \verb|g09|, the installation was succesfull.
@@ -38,23 +47,26 @@ to your \verb|.bashrc|-file:
 \begin{lstlisting}[caption=changing the path variable]
 export PATH=$PATH:/path/to/mopac
 
-# Then, in the shell execute: (or restart the terminal)
+# Then execute: (or restart the terminal)
 source .bashrc
 \end{lstlisting}
 
-It works when you can successfully execute \verb|mopac| on the command line.
+The installation is succesfull when executing \verb|mopac| returns the welcome 
+message. Don't forget to activate the program!
 
 \section{Downloading and compiling}
 
 \subsection{Downloading}
-At \url{https://github.com/MatthijsLasure/MonteCarlo/releases/latest}, the 
-latest release version of the program can be obtained. These versions are 
-deemed to be working correctly.
-Alternatively, the very last revision can be obtained at 
+The source code can be obtained at the links below. The first link refers to 
+the latest release version, which is tested and deemed working. The other link 
+fetches the latest revision, which may contain bugs.
+
+\url{https://github.com/MatthijsLasure/MonteCarlo/releases/latest}
+
 \url{https://github.com/MatthijsLasure/MonteCarlo/archive/master.zip}.
-Please notice that this revision is not a release, and may contain bugs that 
-are not noticed or in the process of being fixed. If git is installed on the 
-system, following command can also be issued to obtain a ready to go directory:
+
+If git is installed on the system, following command can also be issued to 
+obtain a ready to go directory:
 
 \begin{lstlisting}[caption=Clone with git]
 git clone https://github.com/MatthijsLasure/MonteCarlo.git
@@ -63,7 +75,7 @@ git clone https://github.com/MatthijsLasure/MonteCarlo.git
 This command will generate a MonteCarlo-directory, containing all source files.
 
 \subsection{Compiling}
-Compiling is very easy due to the makefiles.
+Compiling is very easy.
 Inside the MonteCarlo source directory, make a directory called either 
 \verb|tmp-gnu| or \verb|tmp-intel|, and issue following command:
 
@@ -76,8 +88,8 @@ The executable \verb|MonteCarloGNU| or \verb|MonteCarloOpenMP| will be created.
 Both have the OpenMP standard enabled to allow for multi-threaded 
 PM6-calculations.
 
-All the utilities can be compiled, just by issuing the \verb|make| command in 
-their respective source directories. GFortran is always used.
+All the utilities are compiled using the GNU compiler in similar fashion.
+Just run \verb|make| in the source directory to obtain the binaries.
 
 \section{Set-up}
 It is strongly advised to make a directory for every simulation, as to keep 
@@ -85,6 +97,19 @@ files separated. Copy all necessary files into this directory, and make sure
 that the executable files (\verb|run.sh| and \verb|MonteCarloGNU|) have the 
 correct permissions (executable). Following files are necessary:
 
+\begin{tabular}{lll}
+	File & Job & Description \\ \hline \hline
+	MonteCarloGNU & General & Binary executable \\
+	run.sh & General & Setup and control script \\
+	config.ini & General & Configuration file \\
+	box.txt & General & Input data \\
+	param.txt & Lennard-Jones & Parameters for the solvent LJ calculations \\
+	par\_sol.txt & Lennard-Jones & Parameters for the solute LJ calculations \\
+	config0.ini & Minimalisation & Configuration file without solute rotation \\
+	BoxScale & Minimalisation & Utility for rescaling the box \\
+\end{tabular}
+
+\iffalse
 \begin{tabular}{l}
 	General \\ \hline
 	MonteCarloGNU \\
@@ -108,6 +133,9 @@ correct permissions (executable). Following files are necessary:
 	\null \\
 	\null \\
 \end{tabular}
+\fi
+
+
 
 The DMSO-molecule is build into the program, so a file is not necessary.
 If a custom molecule is necessary, you have to provide DMSO.txt.
