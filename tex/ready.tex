@@ -9,10 +9,13 @@ density.
 If the program expects a floating point value but an integer is given (because 
 the value happens to be round), it will be incorrectly read. Always make sure 
 there is a point.
-\textvisiblespace
+
 So not: \verb|  8   1 60| (for solute rotation)
 
 But do: \verb|  8   1 60.0|
+
+Wrong: \textvisiblespace\textvisiblespace 8 
+\textvisiblespace\textvisiblespace\textvisiblespace 1 \textvisiblespace 60
 
 \subsection{End Of File}
 Fortran expects an empty line at the end of the file. Not complying will result 
