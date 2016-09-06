@@ -55,3 +55,18 @@ The frequency calculation happens in deuterated solvent.
 
 All calculations are performed at 293.0 K.
 
+\null
+
+If you want to change these settings, please edit the script. The CPU and RAM 
+settings may have a large performance impact if overestimated.
+
+\begin{verbatim}
+%mem=12GB
+%nproc=20
+%chk=hey.chk
+#P b3lyp/6-31g(d) opt(maxcycles=50) freq=(vcd,readisotopes)
+
+opt + freq
+
+0 1
+\end{verbatim}
