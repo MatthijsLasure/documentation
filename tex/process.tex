@@ -7,9 +7,9 @@ To facilitate the process, scripts are provided to take on most of the work.
 The \verb|sim2ext.sh| script will extract (some) accepted configurations from 
 the 
 pool. After converting these to XYZ using the ConvertDump utility, the 
-\verb|XYZ2opt.sh| script turns them into Gaussian input files for 
-optimalization. When done, the \verb|opt2freq.sh| script makes the final input 
-files for the frequency calculations.
+\verb|xyz2freq.sh| script turns them into Gaussian input files for 
+optimalization and frequency calculations.
+When done, the spectra are extracted with Amphidromus and plotted with MatLab.
 
 \section{Extracting configurations}
 
@@ -31,8 +31,27 @@ Place the ConvertDump utility in the sample directory, and run it on every
 configuration.
 
 \begin{lstlisting}[caption=Using the ConvertDump utility to make XYZ's]
-for file in *; do ./ConvertDump -m 3 -b $file -o ${file%.out}.xyz
+for file in *; do ./ConvertDump -m 3 -b $file -o ${file%.out}.xyz; done
 \end{lstlisting}
 
 Please take note that the mode (the -m flag) is 3, rather than 1. This mode 
-will sort the solvent molecules from closest to the solute to furthest.
+will sort the solvent molecules from closest to the solute to furthest. 
+The output file will have the same name but with the XYZ extension.
+
+\section{Optimalization and frequency calculations}
+Put the \verb|xyz2freq.sh| script in the same directory as the XYZ files. Then 
+issue the following command, replacing XX with the number of solute atoms.
+
+\begin{lstlisting}[caption=XYZ to COM]
+for file in *; do ./xyz2opt.sh $file XX; done
+\end{lstlisting}
+
+This will generate the input COM files for Gaussian. It will use 20 processing 
+cores with 12 GB of RAM. The calculations are on the B3LYP/6-31G(d) level. 
+The optimalization is limited to 50 cycles, as it sometimes does not converge.
+All solvent molecules are frozen.
+
+The frequency calculation happens in deuterated solvent.
+
+All calculations are performed at 293.0 K.
+
