@@ -1,1 +1,14 @@
 % Getting converted: the ConvertDump utility
+
+The ConvertDump utility is mainly designed for converting dump- and boxfiles to 
+XYZ files that can be viewed using Jmol. It can also keep track of distances, 
+and sort the solvent molecules (see also chapter~\ref{sec:conf2xyz}). Following 
+modes are available:
+
+\begin{tabular}{ll}
+	Mode & Description \\ \hline
+	0 & Convert a dump file to XYZ \\
+	1 & Convert a box file to XYZ \\
+	2 & Calculate minimal distance per iteration in a dump file \\
+	3 & Convert a box file to XYZ and sort solvent on distance to solute
+\end{tabular}
