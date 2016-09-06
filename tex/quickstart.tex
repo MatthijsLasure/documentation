@@ -1,0 +1,544 @@
+	\chapter{Getting settled: download, compile and set up}
+	% !TeX spellcheck = en_GB
+	% Getting settled: download, compile and set up
+	To use the simulation, following tools and programs are required:
+	\begin{itemize}
+		\item Gaussian 09: for preparing, calculating spectra, calculating 
+		partial 
+		charges with Lennard-Jones. If no LJ calculations are performed, 
+		Gaussian 
+		does not need to be installed on the machine.
+		\item MOPAC 2016: for the PM6 calculations in the QM section.
+		\item A Fortran compiler: to compile the code. Works very good with 
+		gfortran, altough the Intel compiler should work.
+		\item MatLab: not required, but useful for analysis of the simulation 
+		and 
+		viewing the spectra.
+		\item Linux: The program should work with any Linux distribution. 
+		Windows 
+		or Mac OS is not supported.
+	\end{itemize}
+	
+	To compile the source code, you need the \verb|make| utility and a 
+	compiler. 
+	Following compilers have been successfully used. Other versions are likely 
+	to 
+	work, but are untested. To enable parallelization, the compiler must 
+	support 
+	OpenMP.
+	\begin{itemize}
+		\item Intel Fortran Compiler version 16.0.3
+		\item GNU Fortran Compiler versions 4.6.3 and 4.8.5
+	\end{itemize}
+	
+	\section{External tools}
+	\subsection{Gaussian 09}
+	During development, Gaussian 09\cite{g09} versions A02 and 09D have been 
+	used, 
+	and are proven to work correctly.
+	To install Gaussian, follow the instructions. Make sure that the 
+	installation 
+	path is added to the \verb|$PATH|-variable. If Gaussian can be started with 
+	the 
+	command \verb|g09|, the installation was succesfull.
+	
+	\subsection{MOPAC 2016}
+	MOPAC\cite{mopac} is a little tougher. After downloading, installing and 
+	activating, a 
+	symbolic link must be made. Issue following command in the installation 
+	directory:
+	
+	\begin{lstlisting}[caption=Symlink to MOPAC]
+	ln -s MOPAC2016.exe mopac
+	\end{lstlisting}
+	
+	Finally, make sure that the MOPAC directory is also included in the 
+	\verb|$PATH|-variable. The easiest way to achieve this, is by adding 
+	following 
+	to your \verb|.bashrc|-file:
+	\begin{lstlisting}[caption=changing the path variable]
+	export PATH=$PATH:/path/to/mopac
+	
+	# Then execute: (or restart the terminal)
+	source .bashrc
+	\end{lstlisting}
+	
+	The installation is succesfull when executing \verb|mopac| returns the 
+	welcome 
+	message. Don't forget to activate the program!
+	
+	\section{Downloading and compiling}
+	
+	\subsection{Downloading}
+	The source code can be obtained at the links below. The first link refers 
+	to 
+	the latest release version, which is tested and deemed working. The other 
+	link 
+	fetches the latest revision, which may contain bugs.
+	
+	\url{https://github.com/MatthijsLasure/MonteCarlo/releases/latest}
+	
+	\url{https://github.com/MatthijsLasure/MonteCarlo/archive/master.zip}.
+	
+	If git is installed on the system, following command can also be issued to 
+	obtain a ready to go directory:
+	
+	\begin{lstlisting}[caption=Clone with git]
+	git clone https://github.com/MatthijsLasure/MonteCarlo.git
+	\end{lstlisting}
+	
+	This command will generate a MonteCarlo-directory, containing all source 
+	files.
+	
+	\subsection{Compiling}
+	Compiling is very easy.
+	Inside the MonteCarlo source directory, make a directory called either 
+	\verb|tmp-gnu| or \verb|tmp-intel|, and issue following command:
+	
+	\begin{lstlisting}[caption=Compiling the main program]
+	make GNU   # To use the GFortran compiler
+	make intel # To use the Intel compiler
+	\end{lstlisting}
+	
+	The executable \verb|MonteCarloGNU| or \verb|MonteCarloOpenMP| will be 
+	created.
+	Both have the OpenMP standard enabled to allow for multi-threaded 
+	PM6-calculations.
+	
+	All the utilities are compiled using the GNU compiler in similar fashion.
+	Just run \verb|make| in the source directory to obtain the binaries.
+	
+	\section{Set-up}
+	It is strongly advised to make a directory for every simulation, as to keep 
+	files separated. Copy all necessary files into this directory, and make 
+	sure 
+	that the executable files (\verb|run.sh| and \verb|MonteCarloGNU|) have the 
+	correct permissions (executable). Following files are necessary:
+	
+	\begin{tabular}{lll}
+		File & Job & Description \\ \hline \hline
+		MonteCarloGNU & General & Binary executable \\
+		run.sh & General & Setup and control script \\
+		config.ini & General & Configuration file \\
+		box.txt & General & Input data \\
+		param.txt & Lennard-Jones & Parameters for the solvent LJ calculations 
+		\\
+		par\_sol.txt & Lennard-Jones & Parameters for the solute LJ 
+		calculations \\
+		config0.ini & Minimalisation & Configuration file without solute 
+		rotation \\
+		BoxScale & Minimalisation & Utility for rescaling the box \\
+	\end{tabular}
+	
+	\iffalse
+	\begin{tabular}{l}
+		General \\ \hline
+		MonteCarloGNU \\
+		run.sh \\
+		box.txt \\
+		config1.ini \\
+	\end{tabular}
+	\hspace{0.5cm}
+	\begin{tabular}{l}
+		Lennard-Jones \\ \hline
+		param.txt \\
+		par\_sol.txt \\
+		\null \\
+		\null \\
+	\end{tabular}
+	\hspace{0.5cm}
+	\begin{tabular}{l}
+		Minimalisation \\ \hline
+		BoxScale \\
+		config0.ini \\
+		\null \\
+		\null \\
+	\end{tabular}
+	\fi
+	
+	For a breakdown of the files and their syntax, please see chapter XX.
+	
+	\chapter{Getting ready: preparations}
+% Getting ready: preparations
+Before the actual simulation can start, some preparations have to be performed.
+This consists of preparing the solute, the box and performing a minimization 
+using Lennard-Jones. Finally, the box is rescaled to reflect the correct 
+density.
+
+\section{IMPORTANT NOTES}
+\subsection{Floating Point Values}
+If the program expects a floating point value but an integer is given (because 
+the value happens to be round), it will be incorrectly read. Always make sure 
+there is a point.
+
+For example, see the solute rotation setting:\\
+Wrong: \vispace\vispace 8 \vispace\vispace\vispace 1 \vispace 60 \\
+Good: \vispace\vispace 8 \vispace\vispace\vispace 1 \vispace 60.0
+
+\subsection{End Of File}
+Fortran expects an empty line at the end of the file. Not complying will result 
+in an incorrect read. This is very important when preparing data on a Windows 
+machine. It is also advised to use the \verb|dos2unix| and \verb|checknprep| 
+(included in the source code) utilities to ensure correct conventions.
+
+\section{Box preparation}
+For smaller molecules ($N < 25$), the included box can be used. It contains 30 
+DMSO molecules (random placed and rotated) in a \SI{20}{\angstrom} sided box.
+To generate a new box, it generally suffices to generate 6 random values per 
+DMSO molecule, where the first 3 represent the position of the Centre of Mass 
+(CoM), and the latter are the angles of rotation. The coordinates are relative 
+to the middle of the box, so they will be in $[-r/2, +r/2]$. The angles lie in 
+$[-\pi, +\pi]$. Use following syntax:
+
+\begin{enumerate}
+	\item The half length of the edge of the box, in angstrom ($r/2$);
+	\item Number of DMSO molecules;
+	\item The energy of the box (see note);
+	\item The coordinates and angles of all molecules, one per line (X Y Z 
+	$\alpha$ $\beta$ $\gamma$);
+	\item A line that says \verb|SOLUTE|;
+	\item The solute (see next section).
+\end{enumerate}
+
+Note: the energy of the box will be calculated during the simulation when QM 
+calculations are performed (see Getting Started). When starting with 
+minimisations it is sufficient to set it to $0.0$.
+
+\section{Solute preparation}
+This section can be performed with a program of choice that can handle 
+molecules, such as ADF, Gaussian or Chem3D. Draw the molecule and use a quick 
+minimize (if available). Afterwards, perform a good optimisation to get a good 
+structure. Good results have been achieved using Gaussian and the B3LYP/6-31G* 
+potential-base set combination.
+When finished, obtain the cartesian coordinates from the output. Perform a PM6 
+single point calculation, and obtain the energy in Hartree.
+
+Open the box file, and look for the line that says \verb|SOLUTE|. After this 
+line, write the following:
+
+\begin{enumerate}
+	\item The number of solute atoms;
+	\item A description of the solute (e.g. name);
+	\item All atom symbols and coordinates, one line per atom;
+	\item The energy in Hartree;
+	\item The number of bonds used for internal rotation;
+	\item A list of bonds used for rotation (see below);
+	\item An empty line.
+\end{enumerate}
+
+\subsection{Bonds for solute rotation}
+This list contains bonds that can be rotated around. The syntax is the 
+following:
+
+\verb|III_III_FFFFFF|
+
+With III being the number for the atoms of the bond. Notice that one integer 
+MUST occupy 3 characters. The underscore is a character that will be ignored 
+(it is recommended to use a space), 
+and FFFFF is a floating point value, that is used to indicate an individual 
+maximal rotation, overriding the general maximal rotation. This is optional, 
+but will be written by the program in the result file.
+
+In short, writing the following will result in unexpected results:
+
+\verb|8 1| will read in as $(81, 0)$ instead of $(8, 1)$. Rather use 
+\verb|008 001|.
+
+\begin{lstlisting}[caption=Example of a correct box-file]
+7.7838685667999998     
+30
+-796.46817126240921     
+BOX 9
+-4.93  6.07  2.42 -2.07 -1.17   1.32     
+4.66 -1.67  6.16  2.76  2.64  -1.68     
+...     
+SOLUTE
+11
+Solute: (R)-2-Chloropropanoic acid
+C  0.30  0.37 -0.51
+H  0.50 -0.02 -1.51
+Cl 1.54 -0.39  0.57
+C  0.42  1.89 -0.48
+H -0.31  2.33 -1.15
+H  0.25  2.27  0.52
+H  1.42  2.19 -0.81
+C -1.08 -0.12 -0.12
+O -2.09  0.12 -0.73
+O -1.05 -0.85  1.01
+H -1.97 -1.13  1.18
+-0.16947515     
+1
+8   1  60.000000
+
+\end{lstlisting}
+
+It cannot be stressed enough that there MUST be an empty line at the end of the 
+file to ensure correct reading of the data.
+
+\section{Minimisation theory}
+In the run script, there is a section for the minimisation, between the 
+\verb|if false; then| en \verb|fi| statements. To run both the minimisation and 
+the simulation, change the \verb|false| to \verb|true|. If you only want to run 
+the minimisation, copy the first section (until the \verb|fi|) to a seperate 
+run script.
+
+The run script will perform 4 Lennard-Jones simulations with 1 million steps 
+each. In between simulations the box is rescaled.
+
+The density of the box can be calculated using formula~\ref{eqn:density}. If 
+assumed that the solute is of equal volume as a DMSO molecule (which is the 
+case for e.g. chloropropanoic acid), n is 31 and the density is $0,5027 
+\textrm{ g cm}^{-3}$. After a rescaling the correct edge length is obtained to 
+get the density of $1,09037 \textrm{ g cm}^{-3}$.\cite{Radhamma2008}
+The process is done in multiple steps to allow the system to relax so no 
+molecules are clipping into each other.
+
+\begin{equation} \label{eqn:density}
+\rho = \dfrac{n}{(r \si{\angstrom})^3} = \dfrac{n}{(r \si{\cdot 10^{-7} cm})^3} 
+=
+\dfrac{n}{(r \cdot 10^{-7})^3} \cdot \dfrac{M_{DMSO}}{N_A} \dfrac{g}{cm^3}
+\end{equation}
+
+After the LJ simulations, a long QM simulation is run to ensure the box is well 
+optimized.
+
+In the config file (\verb|config0.ini|), the parameters have been set to not 
+rotate the solute (as 
+this is not the actual simulation). As explained in section XX, the number of 
+steps for LJ and GA are ignored as they are passed via command line arguments.
+
+The minimazation is done in several steps in the run script. If necessary, 
+change the scaling factor to obtain a bigger or smaller box.
+
+% Getting started: the simulation
+
+\section{Checking the output}
+When the minimization is done, open the last log file and ensure that the 
+energy is negative. For chloropropanoic acid, typical values are around $-800 
+\textrm {kJ/mol}$.
+
+If the energy is positive some molecules are still clipped into each other. 
+This can be verified by visualisation using the ConvertDump tool and Jmol (see 
+chapter 
+\ref{chap:convertdump}).
+In this case make another long LJ run (possibly use 5 million), again followed 
+by another long GA run.
+
+\section{Starting}
+If you already did the minimisation and choose for the all-in-one package, you 
+don't have to do anything.
+
+If you are starting without minimisation, make sure it's turned off in the 
+\verb|run.sh| script. Then start the script.
+
+\subsection{Where to run?}
+The program is likely to run very long. It is thereby very important to check 
+how to start the program: if you run it in a SSH session, it will be terminated 
+when the session closes due to network issues or a client crash.
+
+To work around this problem, one can use the 'byobu' package. This will open a 
+new shell that stays alive, even when the calling terminal is closed. 
+
+Open a new shell using \verb|byobu bash|. To detach the shell, press CTRL-A and 
+then CTRL-D. For reattaching the shell, just type \verb|byobu|.
+
+
+\subsection{Start}\label{subs:start}
+When you are ready to start, run following command:
+
+\begin{lstlisting}[caption=runmin]
+./run.sh &> log.txt
+\end{lstlisting}
+
+By using \verb|&> log.txt|, all messages are written to log.txt.
+
+Congratulations! The program should be running now!
+		
+	\chapter{Getting into it: keeping taps on the simulation}
+% Getting into it: keeping taps on the simulation
+
+There are a few tools available to keep an eye on your simulation, something 
+that is strongly recommended to do.
+
+
+\section{HTOP}
+Most Linux distributions come with \verb|htop| preinstalled. After startup, you 
+can filter on username by pressing 'u', and apply a filter by pressing 'F4'. 
+
+When starting a LJ simulation, 8 cores will be used by Gaussian for the 
+calculation of the partial charges. Afterwards, the program will run on one 
+core, which should reach 100\%. Due to the OpenMP design there will be multiple 
+threads visible (as set in the run script), but only one will actually do 
+something.
+
+In the case of a QM simulation, multiple cores will be used. Currently 
+(27/07/2016) 2 cores will be maxed out while the other 6 hover around 5\%. This 
+is normal behaviour.
+
+If the program is running (= is present in the list of open programs) but there 
+is no CPU activity it may have locked itself. Consult the logfile and the 
+troubleshooting section of this manual.
+
+On 8-core systems, a system load of 4 to 5 is observed.
+
+\section{check.sh}
+The \verb|check.sh| script is a simple wrapper for the 'tail' command: it will 
+find the latest output file and display the latest line. After sleeping 1 
+second it erases the line and starts over.
+
+Start it using the command below. Terminate using CTRL-C.
+\begin{lstlisting}[caption=The check utility]
+./check.sh log.txt
+\end{lstlisting}
+
+\section{MatLab}
+The scripts \verb|readIO.m| and \verb|importfileFast.m| are designed to read in 
+the data from the output files, and generate the appropriate graphs.
+
+Copy the scripts to the main directory of the simulation. Open \verb|readIO.m| 
+in the editor, and change the loop length to the amount of steps. Save and run 
+the script.
+
+The script will plot the accepted energy versus the step in figure 2. Following 
+variables are available:
+
+\begin{tabular}{ll}
+	Variable & Description \\ \hline
+	dposma & Maximal travel distance per MC step; \\
+	ii & Step numbers; \\
+	kans & Chance of current MC step being accepted; \\
+	pSuc & Total rate of accepted steps; \\
+	ratio & Rate of accepted steps since last adjust; \\
+	rSo & Solvent molecule that was moved in the step; \\
+	rv & Random variable for the Metropolis method; \\
+	TotEng & Total energy of the current step; \\
+	TotEng\_old & Total energy of the last accepted step. \\
+\end{tabular}
+
+\section{ConvertDump}
+The convertdump utility can convert the box- and dump-files into XYZ-files that 
+can be read using Jmol.
+
+To convert a box to a XYZ file without displaying hydrogen atoms (to save space 
+and time), use the command below.
+
+\begin{lstlisting}[caption=Convert a box to a XYZ file]
+$ ./convertDump -m 1 -b box.5.out -o box.5.xyz
++------------------+
+| Converter for MC |
++------------------+
+Using internal coordinates for DMSO.
+\end{lstlisting}
+
+For the full documentation, please see chapter \ref{chap:convertdump}.
+
+\section{Analysis of the conformers}
+Using the scripts \verb|post.sh| and \verb|cenergy.m| you can get an overview 
+of the different conformers. For this, the utility \verb|calcDihedral| and the 
+\verb|post.sh| script must be present in the main directory. Edit the 
+post-script and insert the atoms for the dihedral angle. Run it, with as 
+argument the logfile. This will result in a few files: acc.txt, energy.txt and 
+hoeken.txt. Put these in the same directory as the cenergy-script, and run it 
+in matlab.
+
+NOTE: currently, only single bond rotations are supported.
+	
+	\chapter{Getting out of the woods: processing the results}
+% Getting out of the woods: processing the results
+
+The simulation in itself will just create some configurations. Now we need to 
+select some configurations, and prepare them for the VCD calculations.
+
+To facilitate the process, scripts are provided to take on most of the work. 
+The \verb|sim2ext.sh| script will extract (some) accepted configurations from 
+the 
+pool. After converting these to XYZ using the ConvertDump utility, the 
+\verb|xyz2freq.sh| script turns them into Gaussian input files for 
+optimalization and frequency calculations.
+When done, the spectra are extracted with Amphidromus and plotted with MatLab.
+
+\section{Extracting configurations}
+
+Run the \verb|sim2ext.sh| script in the simulation directory with following 
+arguments: the logfile, the destination directory (optional) and the interval 
+(optional). It will take every nth accepted configuration (with n the interval)
+and place it in the destination directory.
+
+\begin{lstlisting}[caption=The sim2ext script]
+$ ./sim2ext.sh totlog.txt test/
+Files read: 5436
+Box accept: 3514 (64.6400 %)
+Box copy:   140
+\end{lstlisting}
+
+\section{Configurations to XYZ}
+
+Place the ConvertDump utility in the sample directory, and run it on every 
+configuration.
+
+\begin{lstlisting}[caption=Using the ConvertDump utility to make XYZ's]
+for file in *; do ./ConvertDump -m 3 -b $file -o ${file%.out}.xyz; done
+\end{lstlisting}
+
+Please take note that the mode (the -m flag) is 3, rather than 1. This mode 
+will sort the solvent molecules from closest to the solute to furthest. 
+The output file will have the same name but with the XYZ extension.
+
+\section{Optimalization and frequency calculations}
+Put the \verb|xyz2freq.sh| script in the same directory as the XYZ files. Then 
+issue the following command, replacing XX with the number of solute atoms.
+
+\begin{lstlisting}[caption=XYZ to COM]
+for file in *; do ./xyz2opt.sh $file XX; done
+\end{lstlisting}
+
+This will generate the input COM files for Gaussian. It will use 20 processing 
+cores with 12 GB of RAM. The calculations are on the B3LYP/6-31G(d) level. 
+The optimalization is limited to 50 cycles, as it sometimes does not converge.
+All solvent molecules are frozen.
+
+The frequency calculation happens in deuterated solvent.
+
+All calculations are performed at 293.0 K.
+
+\null
+
+If you want to change these settings, you can edit the script. The CPU and RAM 
+settings may have a large performance impact if overestimated.
+
+Below is the standard header.
+\begin{verbatim}
+%mem=12GB
+%nproc=20
+%chk=hey.chk
+#P b3lyp/6-31g(d) opt(maxcycles=50) freq=(vcd,readisotopes)
+
+opt + freq
+
+0 1
+Solute
+Solvent
+
+293. 1. 1.
+Isotopes
+
+\end{verbatim}
+
+Please check the files before submission to ensure that the syntax is correct. 
+
+If the optimalization hits the cycle limit the calculation will terminate.
+You can either restart the optimalization (with the last results) or skip and 
+go straight to the frequency calculations.
+
+\section{Spectrum}
+The Gaussian log files have to be processed into readable spectra, and then 
+added together into one final spectrum. This can be done using Amphidromus (not 
+included). 
+Execute the program inside the directory with the log files. The program will 
+report any errors that may occur. If imaginary frequencies are present the 
+configuration is ignored. This can be overridden with the Amphidromus 
+configuration file.
+
+Using \verb|doImport.m| script with the \verb|importfileAmphi.m| helpscript the 
+spectra will be added together into the final spectrum and displayed on figure 
+4.
