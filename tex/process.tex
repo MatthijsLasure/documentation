@@ -1,1 +1,26 @@
 % Getting out of the woods: processing the results
+
+The simulation in itself will just create some configurations. Now we need to 
+select some configurations, and prepare them for the VCD calculations.
+
+To facilitate the process, scripts are provided to take on most of the work. 
+The \verb|sim2ext.sh| script will extract (some) accepted configurations from 
+the 
+pool. After converting these to XYZ using the ConvertDump utility, the 
+\verb|XYZ2opt.sh| script turns them into Gaussian input files for 
+optimalization. When done, the \verb|opt2freq.sh| script makes the final input 
+files for the frequency calculations.
+
+\section{Extracting configurations}
+
+Run the \verb|sim2ext.sh| script in the simulation directory with following 
+arguments: the logfile, the destination directory (optional) and the interval 
+(optional).
+
+\begin{lstlisting}[caption=The sim2ext script]
+organica@organica1:~/matthijs/old/superRun2$ ./sim2ext.sh totlog.txt test/
+Files read: 5436
+Box accept: 3514 (64.6400 %)
+Box copy:   140
+organica@organica1:~/matthijs/old/superRun2$
+\end{lstlisting}
