@@ -15,7 +15,8 @@ files for the frequency calculations.
 
 Run the \verb|sim2ext.sh| script in the simulation directory with following 
 arguments: the logfile, the destination directory (optional) and the interval 
-(optional).
+(optional). It will take every nth accepted configuration (with n the interval)
+and place it in the destination directory.
 
 \begin{lstlisting}[caption=The sim2ext script]
 $ ./sim2ext.sh totlog.txt test/
@@ -23,3 +24,15 @@ Files read: 5436
 Box accept: 3514 (64.6400 %)
 Box copy:   140
 \end{lstlisting}
+
+\section{Configurations to XYZ}
+
+Place the ConvertDump utility in the sample directory, and run it on every 
+configuration.
+
+\begin{lstlisting}[caption=Using the ConvertDump utility to make XYZ's]
+for file in *; do ./ConvertDump -m 3 -b $file -o ${file%.out}.xyz
+\end{lstlisting}
+
+Please take note that the mode (the -m flag) is 3, rather than 1. This mode 
+will sort the solvent molecules from closest to the solute to furthest.
