@@ -57,9 +57,10 @@ All calculations are performed at 293.0 K.
 
 \null
 
-If you want to change these settings, please edit the script. The CPU and RAM 
+If you want to change these settings, you can edit the script. The CPU and RAM 
 settings may have a large performance impact if overestimated.
 
+Below is the standard header.
 \begin{verbatim}
 %mem=12GB
 %nproc=20
@@ -76,3 +77,22 @@ Solvent
 Isotopes
 
 \end{verbatim}
+
+Please check the files before submission to ensure that the syntax is correct. 
+
+If the optimalization hits the cycle limit the calculation will terminate.
+You can either restart the optimalization (with the last results) or skip and 
+go straight to the frequency calculations.
+
+\section{Spectrum}
+The Gaussian log files have to be processed into readable spectra, and then 
+added together into one final spectrum. This can be done using Amphidromus (not 
+included). 
+Execute the program inside the directory with the log files. The program will 
+report any errors that may occur. If imaginary frequencies are present the 
+configuration is ignored. This can be overridden with the Amphidromus 
+configuration file.
+
+Using \verb|doImport.m| script with the \verb|importfileAmphi.m| helpscript the 
+spectra will be added together into the final spectrum and displayed on figure 
+4.
