@@ -5,10 +5,59 @@ XYZ files that can be viewed using Jmol. It can also keep track of distances,
 and sort the solvent molecules (see also chapter~\ref{sec:conf2xyz}). Following 
 modes are available:
 
-\begin{tabular}{ll}
+\begin{tabular}{cl}
 	Mode & Description \\ \hline
 	0 & Convert a dump file to XYZ \\
 	1 & Convert a box file to XYZ \\
 	2 & Calculate minimal distance per iteration in a dump file \\
 	3 & Convert a box file to XYZ and sort solvent on distance to solute
 \end{tabular}
+
+\section{Dump to XYZ}
+This mode generates an animated XYZ file from the dump file. Jmol can view this 
+frame by frame or as a video.
+
+NOTE: be aware that larger dump files will generate enormous XYZ files and may 
+take a while to finish.
+
+The box to XYZ mode is identical, but only generates one frame.
+
+\section{Distance per iteration}
+Mode 2 calculates the minimal distance between one atom of the solute and one 
+atom per solvent molecule. This can be useful when monitoring a hydrogen bond. 
+The solute atom is then an acidic proton, and the solvent atom is the DMSO 
+oxygen. In this way it is very easy to see if a hydrogen bond is formed.
+
+\section{Sort}
+The last mode is identical to the second one with one difference. It will sort 
+the solvent molecules from closest to the solute to furthest. The distance for 
+one solvent molecule is determined to be the lowest solventatom - soluteatom 
+distance.
+
+\section{Arguments}
+If the program is run without arguments, the help is displayed.
+
+\begin{itemize}
+	\item \verb|-m <mode> / --mode <mode>|: determines which mode to use;
+	\item \verb|-b <box> / --box <box>| (optional): path to box file. If not 
+	present, the 
+	program will use STDIN for the box file;
+	\item \verb|-o <output> / --output <output>| (optional): path to the output 
+	variable. If 
+	omitted, the program will use STDOUT;
+	\item \verb|-d <DMSO> / --dmso <DMSO>| (optional): path to the DMSO file. 
+	If not given, the 
+	program will use the internal coordinates;
+	\item \verb|-s <solute> / --solute <solute>|: for converting dump files 
+	when no box is 
+	available;
+	\item \verb|-D <dump> / --dump <dump>| (optional): path to the dump file. 
+	When empty the 
+	program will use STDIN;
+	\item \verb|-q / --quiet| (optional): do not produce any output. If no 
+	output file is 
+	specified, it will still print the output to STDOUT;
+	\item \verb|n <1> <2> / --atoms <1> <2>|: the atomnumbers used for mode 2;
+	\item \verb|-h / --hydrogens|: when printing XYZ output, also print the 
+	hydrogen atoms.
+\end{itemize}
