@@ -42,24 +42,28 @@ If the program is run without arguments, the help is displayed.
 \begin{itemize}
 	\item \verb|-m <mode> / --mode <mode>|: determines which mode to use;
 	\item \verb|-b <box> / --box <box>| (optional): path to box file. If not 
-	present, the 
-	program will use STDIN for the box file;
+	present, the program will use STDIN for the box file;
 	\item \verb|-o <output> / --output <output>| (optional): path to the output 
-	variable. If 
-	omitted, the program will use STDOUT;
+	variable. If omitted, the program will use STDOUT;
 	\item \verb|-d <DMSO> / --dmso <DMSO>| (optional): path to the DMSO file. 
-	If not given, the 
-	program will use the internal coordinates;
+	If not given, the program will use the internal coordinates;
 	\item \verb|-s <solute> / --solute <solute>|: for converting dump files 
-	when no box is 
-	available;
+	when no box is available;
 	\item \verb|-D <dump> / --dump <dump>| (optional): path to the dump file. 
-	When empty the 
-	program will use STDIN;
+	When empty the program will use STDIN;
 	\item \verb|-q / --quiet| (optional): do not produce any output. If no 
 	output file is 
 	specified, it will still print the output to STDOUT;
 	\item \verb|n <1> <2> / --atoms <1> <2>|: the atomnumbers used for mode 2;
-	\item \verb|-h / --hydrogens|: when printing XYZ output, also print the 
-	hydrogen atoms.
+	\item \verb|-h / --hydrogens| (optional): when printing XYZ output, also 
+	print the hydrogen atoms.
 \end{itemize}
+
+\chapter{BoxScale}
+The BoxScale utility has only one use: scale a box with a given factor. Both 
+the box length and the internal coordinates are multiplied with the factor, and 
+then written to the output file.
+
+\begin{lstlisting}[caption=BoxScale]
+	./BoxScale <factor> <input> <output>
+\end{lstlisting}
