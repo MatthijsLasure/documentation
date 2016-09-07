@@ -69,3 +69,18 @@ then written to the output file.
 \begin{lstlisting}[caption=BoxScale]
 	./BoxScale <factor> <input> <output>
 \end{lstlisting}
+
+\chapter{CalcDihedral}
+This utility allows to determine a dihedral angle, and rotate the molecule 
+around one.
+
+\section{Arguments}
+\begin{itemize}
+	\item \verb|-r <angle> / --rotate <angle>| (optional): rotate the solute. 
+	Value is in degrees. If omitted, the current angle is calculated;
+	\item \verb|-n <a1> <a2> <a3> <a4> / --atoms <a1> <a2> <a3> <a4>|: what 
+	atoms to use for the dihedral angle;
+	\item \verb|-b <box> / --box <box>|: input box file;
+	\item \verb|-o <output> / --output <output>|: output box file. Only needed 
+	when rotating.
+\end{itemize}
